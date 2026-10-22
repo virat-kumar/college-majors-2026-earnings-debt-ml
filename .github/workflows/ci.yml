@@ -1,0 +1,38 @@
+name: Cross-platform setup and integrity
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: ${{ matrix.os }} · Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check exact original notebook and no committed datasets
+        shell: python
+        run: |
+          import hashlib, pathlib, subprocess
+          notebook = pathlib.Path("College_Majors_EDA_Colab.ipynb")
+          expected = "418649971708968b7d999cfc9dc08fc09a9890f331c0ab32ac48829dfbdafe42"
+          actual = hashlib.sha256(notebook.read_bytes()).hexdigest()
+          assert actual == expected, f"Notebook modified: {actual}"
+          tracked = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+          forbidden = [p for p in tracked if p.lower().endswith((".csv", ".tsv", ".parquet", ".zip", ".pkl", ".joblib", ".key", ".pem")) or p.startswith(("data/", ".venv/", ".env"))]
+          assert not forbidden, f"Disallowed tracked files: {forbidden}"
+          print("Notebook hash and data/secret guard: PASS")
+      - name: Install dependencies and run smoke tests (offline dataset mode)
+        run: python setup.py --skip-data

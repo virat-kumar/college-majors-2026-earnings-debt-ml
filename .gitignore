@@ -1,0 +1,41 @@
+# Never commit the licensed raw dataset or derived row-level data
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.arrow
+*.zip
+*.gz
+*.7z
+*.pkl
+*.pickle
+*.joblib
+data/
+datasets/
+.cache/
+.kaggle/
+# Python / notebooks
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.artifacts/
+.output/
+coverage/
+.coverage
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+kaggle.json
+*.pem
+*.key
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
