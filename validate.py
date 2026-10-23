@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib
 import json
 from pathlib import Path
@@ -28,6 +29,15 @@ def main() -> None:
     ]:
         importlib.import_module(name)
     print(f"PASS: notebook parsed ({len(notebook['cells'])} cells) and runtime packages import.")
+
+    split = ROOT / "data" / "split_ids.csv"
+    if split.exists():
+        expected = "e5215d887840ae25e0c953793842b1886670f51b879783904988a1348f7bfe6c"
+        actual = hashlib.sha256(split.read_bytes()).hexdigest()
+        assert actual == expected, f"Published split file differs: {actual}"
+        print(f"PASS: exact published split reference SHA256={actual}")
+    else:
+        print("INFO: no tracked reference split present; older local checkout.")
 
     if args.require_data or (ROOT / "college_majors_2026.csv").exists():
         from download_data import DEST, check_csv

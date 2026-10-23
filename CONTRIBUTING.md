@@ -4,7 +4,7 @@
 
 - Keep the original `College_Majors_EDA_Colab.ipynb` intact. Its Git blob SHA is **`f63ff94c5dd42ffdddb2ad4c7f4cc6b76616994f`**. Put new models in separate notebooks or Python modules.
 - Share a common data source, cleaning rules, `opeid6` institution-level split and grouped CV folds.
-- Never commit Kaggle datasets, `split_ids.csv`, archives, serialized models, artifacts, notebooks with private data, credentials or virtual environments.
+- The reviewed CSV snapshots are an explicit exception: the raw source is a GitHub Release asset and the canonical grouped split is tracked at `data/split_ids.csv` under CC BY-SA 4.0. Never commit other datasets, arbitrary generated root-level `split_ids.csv`, archives, models, secrets, or environments without review.
 - Prefer small, reviewable changes. Do not reformat the original notebook as part of unrelated work.
 - Academic course deliverables require clear attribution and manual review of statistical claims.
 
@@ -24,7 +24,7 @@ git push -u origin feature/your-model
 
 Open a pull request to `main`; describe the goal, metrics, data split, target, preprocessing, leakage rules and limitations. At least one teammate should review model methodology before merging.
 
-**Before committing**, run `git status --short`, `git diff --cached --name-only` and confirm no data, secrets or binary outputs are included. The `.gitignore` is a protective default, **not a replacement for review**. GitHub's public visibility means pushed contents can be copied by anyone.
+**Before committing**, run `git status --short`, `git diff --cached --name-only` and confirm only explicitly reviewed public CSV snapshot data (currently `data/split_ids.csv`), source code and docs are included; no secrets or binary outputs. The `.gitignore` is a protective default, **not a replacement for review**. GitHub's public visibility means pushed contents can be copied by anyone.
 
 ## Agreed and open modeling decisions
 
@@ -41,7 +41,7 @@ Log the final team decision in a pull request or issue, then implement it consis
 ## Pull request checklist
 
 - [ ] Original notebook byte hash remains unchanged.
-- [ ] No raw data files or model artifacts are tracked.
+- [ ] Only the reviewed `data/split_ids.csv` snapshot is tracked; the raw large CSV is distributed via the public versioned release, not ordinary Git.
 - [ ] `python setup.py --skip-data` (or existing venv with `python validate.py`) passes.
 - [ ] Sources and credits are cited.
 - [ ] Data leakage and institution-group overlap have been checked.

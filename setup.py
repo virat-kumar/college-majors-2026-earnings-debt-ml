@@ -24,7 +24,7 @@ def main() -> None:
     parser.add_argument(
         "--skip-data",
         action="store_true",
-        help="Install and smoke-test without downloading Kaggle data (used by CI).",
+        help="Install and smoke-test without downloading GitHub/Kaggle data (used by CI).",
     )
     parser.add_argument(
         "--skip-install",

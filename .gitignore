@@ -1,5 +1,10 @@
-# Never commit the licensed raw dataset or derived row-level data
+# Ignore the original raw CSV (published as a release asset) and arbitrary generated CSVs.
+# Allow only the reviewed canonical reference split and attribution document.
 *.csv
+!data/
+data/*
+!data/split_ids.csv
+!data/README.md
 *.tsv
 *.parquet
 *.feather
@@ -10,7 +15,6 @@
 *.pkl
 *.pickle
 *.joblib
-data/
 datasets/
 .cache/
 .kaggle/
