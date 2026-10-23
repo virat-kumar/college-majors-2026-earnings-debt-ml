@@ -1,0 +1,90 @@
+{
+  "source_notebook_sha256": "418649971708968b7d999cfc9dc08fc09a9890f331c0ab32ac48829dfbdafe42",
+  "figures": [
+    {
+      "cell_index_zero_based": 8,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_missing_by_variable_group.png",
+      "sha256": "65f11790bfa27df3031568425362cb5fa66f4c1ac035e1cf4036160befdb1cb2",
+      "bytes": 41831
+    },
+    {
+      "cell_index_zero_based": 19,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_earnings_raw_vs_log.png",
+      "sha256": "53fa131805cc1aa21d227133f0a8915b6862a8bc870c73e35ea805997cf31934",
+      "bytes": 36538
+    },
+    {
+      "cell_index_zero_based": 21,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_earnings_by_credential.png",
+      "sha256": "aceede903b16661e17b28f9676ee6a793736699c391dc7ab96f24c4ad1978aa7",
+      "bytes": 68436
+    },
+    {
+      "cell_index_zero_based": 23,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_earnings_by_major_family.png",
+      "sha256": "62e6136859326905ba3818cab000e604be23e725e6056508bde6deb139dfbad1",
+      "bytes": 184294
+    },
+    {
+      "cell_index_zero_based": 26,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_institution_type_and_region.png",
+      "sha256": "b2358ed4fca67c22736fc8d20b3720aafc7130e387b9e131bf7fed2c150aabcb",
+      "bytes": 61921
+    },
+    {
+      "cell_index_zero_based": 28,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_numeric_relationships.png",
+      "sha256": "3500f85536e56d38291b432555bea9b4d366887400a775147d91ddc6b00dca8e",
+      "bytes": 253841
+    },
+    {
+      "cell_index_zero_based": 29,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_spearman_correlations.png",
+      "sha256": "a175e48fed3a09612c57eb933150e317ada99d044bded399fcdf818e1d92663a",
+      "bytes": 227028
+    },
+    {
+      "cell_index_zero_based": 35,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_earnings_trajectory.png",
+      "sha256": "eb6de1fb7c06683dafd4bd48a6ef7907f5260e1c157264b0dcbde261196b8d0c",
+      "bytes": 78218
+    },
+    {
+      "cell_index_zero_based": 37,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_debt_risk_thresholds.png",
+      "sha256": "539e761a9f3e9e31fdfdd5c1e13e297e481368a56d7f3106c755135552fe0a37",
+      "bytes": 38799
+    },
+    {
+      "cell_index_zero_based": 38,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_risk_by_credential_and_school.png",
+      "sha256": "1d7a0301c72b32b7eb72232cd648ae1556a05f05c88992d6cb9228693f019513",
+      "bytes": 68196
+    },
+    {
+      "cell_index_zero_based": 39,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_risk_by_major.png",
+      "sha256": "05aac39ed7038b2421bc6955699a88e318e2120e3f120c8da5f06ba61823ec72",
+      "bytes": 108604
+    },
+    {
+      "cell_index_zero_based": 44,
+      "notebook": "College_Majors_EDA_Colab.ipynb",
+      "figure": "reports/figures/eda_ai_exposure_and_job_growth.png",
+      "sha256": "d18fc13c354593d5613ca792da7a9f88b1e60850ce4d23a977e7327dcf460168",
+      "bytes": 55068
+    }
+  ],
+  "description": "Exact embedded PNG output bytes from the published original EDA notebook; not regenerated or modified."
+}

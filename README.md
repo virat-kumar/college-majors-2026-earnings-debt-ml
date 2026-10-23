@@ -1,131 +1,124 @@
-# College Majors 2026: Earnings, Debt Risk & Career Outcomes
+# College Majors 2026 | Applied Machine Learning Group 2
 
-**BUAN 6341 · Applied Machine Learning · Group 2 · The University of Texas at Dallas**
+**University of Texas at Dallas - BUAN 6341 - Group 2**
 
-A reproducible, institution-aware machine learning study of **college program earnings**, **student debt risk**, and **career outlook / AI exposure** using the *College Majors 2026: Earnings, Debt, Jobs, AI* dataset.
+We completed a reproducible applied machine-learning study of **program-level median earnings four years after bachelor's degree completion**. Our project proceeds from the original team's EDA through an independent dataset audit, four different regression model families, cross-validation selection, hyperparameter tuning, explainability and an actionable but cautious business case.
 
-> **Project status:** Data cleaning, exploratory data analysis, leakage audit, grouped data split, preprocessing and a regression baseline are available. Final model selection and classification scope remain group decisions. Reported EDA associations are **not causal claims**.
+**Status: COMPLETE. The final report, code, figures, reviewed CSV results and PDF are published.** The original EDA notebook remains byte-for-byte unchanged. The source dataset is public in GitHub Releases. No GitHub Actions workflows are configured.
 
-## Start in three steps
+## Final submission: open this first
 
-Install **Python 3.10–3.13** and [Git](https://git-scm.com/), then in a terminal (PowerShell on Windows or bash on Linux):
+| File | What it contains |
+|:---|:---|
+| **[Final Group 2 project report (PDF)](submission/Group_2_Final_Project_Report.pdf)** | **23-page, submission-ready report** with professional cover, table of contents, 15 real charts, all methodology and metrics, explainability, business case and references |
+| [Final report Markdown source](submission/Group_2_Final_Project_Report.md) | Editable source corresponding to the PDF; regenerates it via Pandoc |
+| [Detailed model explanation](reports/MODEL_EXPLANATION.md) | Methodology, before/after metrics, uncertainty, interpretability and error slices |
+| [Business case](reports/BUSINESS_CASE.md) | Stakeholder design, pilot phases, KPIs, safety and economic limitations |
 
-```sh
+## Find every project phase
+
+| Stage | Research question / accomplished work | Read and verify here |
+|:---|:---|:---|
+| **1 - EDA** | What does the data contain? Why clean it? What do earnings, debt and majors look like? | [Unmodified EDA notebook](College_Majors_EDA_Colab.ipynb); [EDA narrative](reports/EDA_SUMMARY.md); [12 extracted original figures and provenance](reports/eda_figure_manifest.json) |
+| **2 - Data audit** | Are cleaning numbers and shared-campus deduplication correct? | [Independent audit script](modeling/eda_audit.py); [summary JSON](reports/eda_audit.json); [cleaning CSV](reports/eda_cleaning_audit.csv); [target coverage CSV](reports/eda_scope_audit.csv) |
+| **3 - Data engineering** | Are the original test institutions isolated and predictors leakage-safe? | [Shared modeling pipeline](modeling/common.py); [canonical school split CSV](data/split_ids.csv); [data provenance](DATA.md); [tests](tests/) |
+| **4 - Model selection** | Which of four regression families predicts reported bachelor's earnings most accurately? | [Model selection code](modeling/model_selection.py); [comparison CSV](reports/model_comparison.csv); [all 25 fold-level scores](reports/model_selection_folds.csv); [comparison plot](reports/figures/model_comparison.png) |
+| **5 - Model tuning** | Which settings improve the selected family without viewing final test outcomes? | [Hyperparameter tuning code](modeling/model_fine_tuning.py); [12 candidates CSV](reports/tuning_candidates.csv); [frozen holdout evaluation JSON](reports/model_evaluation.json); [heldout predictions CSV](reports/heldout_predictions.csv) |
+| **6 - Model explainability** | What inputs matter and where does the model err? | [Post-fit diagnostic code](modeling/model_explainability.py); [detailed explanation](reports/MODEL_EXPLANATION.md); [feature importance CSV](reports/feature_importance.csv); [error by segment CSV](reports/error_by_segment.csv); [diagnostic figures](reports/figures/) |
+| **7 - Business case** | How could this be used responsibly in student advising or academic program research? | [Business case report](reports/BUSINESS_CASE.md); [full report](submission/Group_2_Final_Project_Report.pdf) |
+| **8 - PDF deliverable** | How do all parts connect into one professional submission? | [Final PDF](submission/Group_2_Final_Project_Report.pdf), [Markdown](submission/Group_2_Final_Project_Report.md), [PDF generator](submission/render_report.py) |
+
+## Model comparison: actual experimental results
+
+All four models used the same **14 EDA-selected predictors**, the same **five institution-disjoint folds**, and USD-scale mean absolute error (MAE) as the primary choice criterion.
+
+| Model | Five-fold validation MAE |
+|:---|---:|
+| **Histogram Gradient Boosting** (selected family) | **USD 6,880.79** |
+| Random Forest | USD 6,918.22 |
+| Decision Tree | USD 8,247.56 |
+| Ridge Regression | USD 8,964.19 |
+| Mean-only baseline (reference, not one of the four) | USD 15,806.18 |
+
+We tuned the selected boosted-tree family using **12 configurations and five training-only folds**. Best tuned CV MAE was **USD 6,855.28**.
+
+Our final test was **5,771 eligible bachelor's-program records from 379 schools never present in training**. The tuned model achieved **USD 6,956.68 test MAE**, **USD 10,111.64 RMSE** and **R² = 0.7793**, while untuned boosting achieved USD 6,993.01 MAE and the mean-only comparator USD 16,137.72 MAE.
+
+**Important:** Tuning improved test MAE only **USD 36.34** over the untuned winner, and a school-clustered bootstrap interval includes zero. We do **not** claim the small tuning advantage is established. The much larger improvement versus a constant-mean predictor reflects useful prediction, **not** student earnings gained or proven causal benefits.
+
+## Data available in this repository
+
+The public [College Majors 2026: Earnings, Debt, Jobs, AI](https://www.kaggle.com/datasets/kylefengkfeng209/college-majors-2026-earnings-debt-jobs-ai) dataset (Kaggle listing: **CC BY-SA 4.0**) has **227,980 rows x 72 variables**. The EDA cleaned it to **212,707 U.S. institution-program records**. Four-year earnings are reported for **51,818** of those; **25,283** are bachelor's records.
+
+Both exact source CSV snapshots are public:
+
+- **[Original college_majors_2026.csv (126.3 MB) - GitHub Release](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/college_majors_2026.csv)**. It is intentionally a versioned GitHub Release asset because GitHub regular Git rejects blobs over 100 MiB.
+- **[Canonical split_ids.csv (8.9 MB) - tracked directly](data/split_ids.csv)** and [also in that Release](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/split_ids.csv).
+- All **reviewed derived metrics/analysis CSVs** are Git-tracked in [reports/](reports/), including model selection, tuning candidates, program-level heldout predictions, and explainability results.
+
+[DATA.md](DATA.md) records provenance, exact SHA-256 checksums and licensing. We do not publish passwords, Kaggle keys, virtual environments, caches or arbitrary local CSV files.
+
+## Set up and reproduce (Windows or Linux)
+
+Install Python **3.10-3.13** and Git. Then:
+
+```bash
 git clone https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml.git
 cd college-majors-2026-earnings-debt-ml
 python setup.py
 ```
 
-**The same `python setup.py` command works on Windows and Linux.** It:
+The same `python setup.py` creates `.venv`, installs `requirements.txt`, automatically downloads and SHA-256-verifies the source CSV from our GitHub Release (or falls back to Kaggle), and validates the notebook imports. On systems that call Python `python3`, use `python3 setup.py`.
 
-1. Creates a project-local, isolated `.venv` using your Python interpreter (no system package installation).
-2. Installs packages from `requirements.txt`.
-3. Downloads the **versioned public CSV snapshot from GitHub Releases** (or Kaggle if GitHub is unavailable), verifies the exact SHA-256 and expected shape, then places `college_majors_2026.csv` in the repository root without tracking the downloaded copy.
-4. Smoke-tests installed dependencies and confirms the notebook can find the dataset.
+To repeat **every stage** using the correct isolated interpreter without manually activating it:
 
-**Launch** after setup:
-
-```sh
-python launch.py
+```bash
+python run_project.py
 ```
 
-JupyterLab opens in your browser. Open **`College_Majors_EDA_Colab.ipynb`**, then choose **Run All** from the top. You do **not** have to activate a virtual environment manually.
+This runs the EDA integrity audit, exact original EDA figure extraction, four-model comparison, grouped hyperparameter search, final holdout evaluation, explainability and correctness tests. It takes longer than setup because models are genuinely retrained. To check the already-computed committed outputs without retraining:
 
-If your Linux distro only provides the `python3` command, run `python3 setup.py` and `python3 launch.py` instead. If Windows uses the Python Launcher, `py -3.13 setup.py` is equivalent. Setup refuses unsupported interpreter versions rather than modifying your system. On Ubuntu/Debian, install the corresponding `python3-venv` package if venv creation is unavailable.
+```bash
+python run_project.py --verify-only
+```
 
-## Project structure
+To explore the original notebook in JupyterLab, use `python launch.py`. To regenerate the same PDF from Markdown (requires Pandoc and XeLaTeX, **not** needed to read or submit the committed PDF), run `python submission/render_report.py`.
+
+## Project organization
 
 ```text
 college-majors-2026-earnings-debt-ml/
-├── College_Majors_EDA_Colab.ipynb  # Original, unedited EDA notebook
-├── README.md                       # This guide
-├── DATA.md                         # Dataset release links, provenance, integrity and licensing
-├── CONTRIBUTING.md                 # Team Git + review guidelines
-├── requirements.txt                # Python dependencies
-├── setup.py                        # Cross-platform, one-command full setup
-├── download_data.py                # Exact versioned GitHub Release download + Kaggle fallback
-├── validate.py                     # Smoke tests; optional notebook run
-├── launch.py                       # Cross-platform JupyterLab launcher
+├── College_Majors_EDA_Colab.ipynb  # Original, unchanged EDA
+├── README.md, DATA.md, CONTRIBUTING.md
+├── setup.py, requirements.txt, run_project.py
+├── download_data.py, launch.py, validate.py
+├── data/
+│   ├── split_ids.csv                # The original, canonical group split
+│   └── README.md
+├── modeling/
+│   ├── common.py                    # 14 predictors, canonical folds, pipelines
+│   ├── eda_audit.py                 # Independent EDA audit
+│   ├── extract_eda_figures.py       # 12 original notebook images
+│   ├── model_selection.py           # Four regression families
+│   ├── model_fine_tuning.py         # 12-setting grouped search, final test
+│   ├── model_explainability.py      # Permutation importance and errors
+│   └── README.md
 ├── reports/
-│   └── EDA_SUMMARY.md              # Findings from group's 2-page summary
-├── .github/workflows/ci.yml        # Linux / Windows setup validation
-├── .gitignore                      # Ignore raw downloads, caches and secrets
-│
-├── .venv/                          # Created by setup, IGNORED
-├── college_majors_2026.csv         # Downloaded raw CSV, ignored by Git
-├── split_ids.csv                   # Notebook-generated file, ignored by Git
-└── data/
-    ├── split_ids.csv              # Committed reference grouped train/test split
-    ├── README.md                  # Public data provenance + CC BY-SA attribution
-    └── source_manifest.json       # Local metadata, ignored by Git
+│   ├── EDA_SUMMARY.md, MODEL_EXPLANATION.md, BUSINESS_CASE.md
+│   ├── *.csv, *.json                # Executed, auditable evidence
+│   └── figures/                    # Original EDA + new model charts
+├── submission/
+│   ├── Group_2_Final_Project_Report.md
+│   ├── Group_2_Final_Project_Report.pdf
+│   ├── README.md, render_report.py, report_style.tex
+├── tests/
+└── .venv/, .artifacts/, downloaded raw CSV  # local-only, ignored
 ```
 
-**Both CSVs are published on GitHub:** the original 126.3 MB dataset is a [versioned GitHub Release asset](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/tag/data-v1.0.0), and the 8.9 MB [institution-group split](data/split_ids.csv) is also Git-tracked as a reviewed reference. Other generated outputs, credentials and virtual environments remain ignored.
+**No GitHub Actions workflows:** We intentionally removed the original `.github/workflows/ci.yml` and did not restore it.
 
-## Research questions
+## Research limitations and attribution
 
-| Task | Target | Status / evaluation |
-| --- | --- | --- |
-| **Regression** | `median_earnings_4yr_usd`: 4-year median earnings after completion | Baseline: mean-only grouped-CV **MAE $15,799** for bachelor's programs; compare better models using MAE (and inspect dollar-scale error if modeling log earnings) |
-| **Classification** | High debt-risk using `payment_to_income_pct_1yr > 8` | Threshold and whether to retain this problem across **all credential levels** require group sign-off; avoid target leakage |
-| **Career analysis** | Job outlook and AI-software exposure | Exploratory association only, not a causal effect of AI on earnings |
+Our final prediction target is reported **bachelor's program-level** median earnings, **not individual graduate pay**. Outcome suppression is extensive; no result proves effects of changing a major, tuition, curriculum or AI exposure. Debt-to-income classification was *explored in EDA* but **not trained as a classifier** here. The full PDF discusses institutional/group biases, data timing, error distribution and proposed supervised pilot safeguards.
 
-The notebook contains the initial **data cleaning, EDA and shared split**, not a complete final supervised modeling pipeline. Contributors should add model experiments as new notebooks or modules rather than rewriting the original EDA source.
-
-### Baseline data and reproducibility
-
-The public Kaggle dataset contains **227,980 program records and 72 variables**. Each record represents an institution, study field and credential combination. Original EDA cleaning removes foreign-institution entries and redundant branch-campus copies, yielding **212,707 records**. Target availability is limited by privacy suppression: 4-year earnings are reported for **51,818** programs, and debt-to-income for **37,789** programs. This missingness is not random; do not generalize to all programs without discussion.
-
-For unbiased evaluation, the original notebook makes an **80/20 train/test split by institution (`opeid6`)**. It also defines **five institution-grouped cross-validation folds**, preventing one institution appearing in both training and test sets or both sides of a CV fold. Exploratory comparisons and preprocessing fit on training data only.
-
-**Leakage safeguards:** Do not add other outcome-derived columns as regression predictors. The EDA explicitly flags 1-/5-year earnings, debt-to-earnings and status/target-derived fields, including `national_median_earnings_4yr_usd` and `earnings_vs_national_pct`. Revisit feature selection during group review.
-
-For full EDA findings, see [reports/EDA_SUMMARY.md](reports/EDA_SUMMARY.md).
-
-## Dataset: download, location and license
-
-**Original source and attribution:** [College Majors 2026: Earnings, Debt, Jobs, AI — Kaggle](https://www.kaggle.com/datasets/kylefengkfeng209/college-majors-2026-earnings-debt-jobs-ai)
-
-**Data license:** The Kaggle listing identifies **CC BY-SA 4.0**. The public dataset and derived split are redistributed under these terms with [publisher attribution](data/README.md). The team's original code and notebook are not automatically covered by the data license.
-
-**Get the actual CSV files:** [Raw college_majors_2026.csv (GitHub Release)](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/college_majors_2026.csv) · [Grouped split_ids.csv (tracked reference)](data/split_ids.csv) · [Both files in Data Release v1.0.0](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/tag/data-v1.0.0).
-
-```text
-# Desired local layout:
-college-majors-2026-earnings-debt-ml/
-├── College_Majors_EDA_Colab.ipynb
-└── college_majors_2026.csv       # Local, ignored
-```
-
-`python setup.py` fetches the exact versioned GitHub Release asset, verifies its SHA-256 and size, and falls back to Kaggle if needed. For manual setup, download the [original CSV asset](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/college_majors_2026.csv), put it next to the notebook and rerun setup. The canonical derived split lives in [data/split_ids.csv](data/split_ids.csv). See [DATA.md](DATA.md) for reproducibility and license details.
-
-## Common commands
-
-| Goal | Both Windows and Linux |
-| --- | --- |
-| Initial or repeat installation + dataset download | `python setup.py` |
-| Install only / CI without dataset | `python setup.py --skip-data` |
-| Revalidate after installation | `python .venv/Scripts/python.exe validate.py` (Windows) or `./.venv/bin/python validate.py` (Linux) |
-| Start JupyterLab | `python launch.py` |
-| Re-fetch/check dataset (after setup) | `python setup.py --skip-install` |
-| Execute the notebook in a copy (after setup) | `python .venv/Scripts/python.exe validate.py --execute` (Windows) or `./.venv/bin/python validate.py --execute` (Linux) |
-
-The optional `--execute` command does **not** overwrite the checked-in notebook; it writes a run-result copy into ignored `.artifacts/` instead. The notebook writes its own ignored root-level `split_ids.csv`; the published, immutable reference is [data/split_ids.csv](data/split_ids.csv).
-
-## Collaboration
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
-
-- Create a feature branch named `feature/<your-task>` and send a pull request to `main`.
-- Reuse the same **unmodified, audited dataset and institution-level split** for a fair apples-to-apples model comparison.
-- Record training population, chosen features, preprocessing, validation folds, baseline and random seed in each PR.
-- The two reviewed CSV snapshots have been explicitly published (large raw data in the versioned Release, reviewed split in data/). Do not commit *additional* datasets, notebook artifacts, secrets, Kaggle tokens, Colab credentials or environment folders without review.
-- Coordinate decisions on **bachelor's vs. all credentials**, **the debt-risk task/threshold**, **final feature list** and **raw vs. log earnings** before merging modeling results.
-
-**Academic integrity:** Attribute work and data sources; use this shared repository for collaboration and reproducible analysis, and follow applicable course rules.
-
-## Credits and scope
-
-Original data-cleaning/EDA notebook prepared by **Manoj Elangovan Jayanthi**, as credited in the source notebook. Project organized for **BUAN 6341 Group 2** at UT Dallas. Dataset assembled by the Kaggle publisher from College Scorecard, NCES CIP-to-SOC mapping, BLS projections and O*NET. See original dataset page for credits and licensing.
-
-**License note:** Dataset licensing is not the same as code/notebook licensing. No additional license is asserted for teammates' original notebook content without their permission.
+The protected team EDA notebook credits **Manoj Elangovan Jayanthi** as its preparer. We retained its source bytes and original graphics, and credit Kaggle dataset publisher **kylefengkfeng209**. The source dataset and reviewed derived split are attributed under the published dataset's CC BY-SA 4.0 terms; these do not automatically license teammates' original software/notebook content.

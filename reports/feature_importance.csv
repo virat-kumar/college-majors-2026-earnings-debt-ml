@@ -1,0 +1,15 @@
+feature,delta_mae_usd,delta_mae_sd_usd,n_eval_rows,n_repeats
+cip_family_title,4578.25,89.12,2000,3
+occupation_growth_pct_2024_34,3035.85,77.56,2000,3
+ai_software_occupation_share,2351.93,70.82,2000,3
+occupation_median_wage_2024_usd,1606.86,29.64,2000,3
+institution_region,987.23,29.26,2000,3
+institution_tuition_out_state_usd,942.88,40.94,2000,3
+institution_avg_sat,919.68,42.68,2000,3
+institution_undergrad_enrollment,395.57,19.55,2000,3
+awards_year1,307.07,49.99,2000,3
+institution_admission_rate,223.0,24.32,2000,3
+institution_tuition_in_state_usd,163.13,23.44,2000,3
+distance_education,21.05,10.59,2000,3
+institution_control,16.14,6.93,2000,3
+institution_is_hbcu,7.99,3.02,2000,3

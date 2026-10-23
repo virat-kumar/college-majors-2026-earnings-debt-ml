@@ -1,0 +1,18 @@
+{
+  "raw_n": 227980,
+  "raw_unique_program_ids": 227980,
+  "foreign_removed": 4662,
+  "shared_campus_rows_removed": 10611,
+  "non_shared_rows_removed": 0,
+  "groups_with_conflicting_reported_earnings": 0,
+  "cleaned_rows": 212707,
+  "reported_earnings": 51818,
+  "reported_earnings_pct_of_cleaned": 24.36,
+  "bachelor_reported_earnings": 25283,
+  "debt_income_reported": 37789,
+  "earnings_raw_skewness": 1.8,
+  "earnings_log_skewness": 0.036,
+  "raw_dataset_sha256": "58f1c10e79793f33049f3b381cd81d4d0c190ca1052e427c29779d0c89c5ceca",
+  "original_notebook_sha256": "418649971708968b7d999cfc9dc08fc09a9890f331c0ab32ac48829dfbdafe42",
+  "reference_split_program_ids_match_cleaned": true
+}

@@ -1,0 +1,43 @@
+{
+  "selected_family": "hist_gradient_boosting",
+  "selection_cv_mae_usd": 6880.79,
+  "original_cv_mae_usd_rechecked_in_tuning": 6880.79,
+  "tuned_cv_mae_usd": 6855.28,
+  "tuning_search_candidates": 12,
+  "tuning_grouped_folds": 5,
+  "tuning_seconds": 128.3,
+  "best_parameters": {
+    "model__l2_regularization": 4.0,
+    "model__learning_rate": 0.095,
+    "model__max_iter": 170,
+    "model__max_leaf_nodes": 47,
+    "model__min_samples_leaf": 15
+  },
+  "train_programs": 19512,
+  "test_programs": 5771,
+  "train_institutions": 1420,
+  "test_institutions": 379,
+  "test_set_opened_only_after_search": true,
+  "holdout": {
+    "tuned_winner": {
+      "mae_usd": 6956.6777,
+      "rmse_usd": 10111.6371,
+      "r2": 0.7793
+    },
+    "untuned_winner": {
+      "mae_usd": 6993.0135,
+      "rmse_usd": 10173.4325,
+      "r2": 0.7766
+    },
+    "dummy_mean": {
+      "mae_usd": 16137.7186,
+      "rmse_usd": 21586.672,
+      "r2": -0.0057
+    }
+  },
+  "holdout_tuned_absolute_error_p50_usd": 5069.47,
+  "holdout_tuned_absolute_error_p90_usd": 14800.24,
+  "methodology": "Group-separated holdout reserved until after fivefold grouped train-only hyperparameter search. Raw USD response; MAE primary. Pipeline refits preprocessing per fold.",
+  "holdout_mae_improvement_vs_dummy_percent": 56.89,
+  "holdout_mae_delta_tuned_minus_untuned_usd": -36.34
+}

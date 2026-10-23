@@ -1,0 +1,61 @@
+{
+  "permutation_eval_rows": 2000,
+  "permutation_repeats": 3,
+  "permutation_scoring": "reduction in negative MAE / loss of prediction accuracy, USD",
+  "bootstrap_tuned_minus_untuned": {
+    "point_delta_mae_a_minus_b_usd": -36.34,
+    "lower_95_usd": -107.73,
+    "upper_95_usd": 40.11,
+    "n_institutions": 379,
+    "bootstrap_repeats": 2000,
+    "seed": 42,
+    "interpretation": "Paired institution-cluster bootstrap; descriptive, not a formal model-superiority test."
+  },
+  "bootstrap_tuned_minus_dummy": {
+    "point_delta_mae_a_minus_b_usd": -9181.04,
+    "lower_95_usd": -9799.47,
+    "upper_95_usd": -8634.72,
+    "n_institutions": 379,
+    "bootstrap_repeats": 2000,
+    "seed": 42,
+    "interpretation": "Paired institution-cluster bootstrap; descriptive, not a formal model-superiority test."
+  },
+  "top_features": [
+    {
+      "feature": "cip_family_title",
+      "delta_mae_usd": 4578.25
+    },
+    {
+      "feature": "occupation_growth_pct_2024_34",
+      "delta_mae_usd": 3035.85
+    },
+    {
+      "feature": "ai_software_occupation_share",
+      "delta_mae_usd": 2351.93
+    },
+    {
+      "feature": "occupation_median_wage_2024_usd",
+      "delta_mae_usd": 1606.86
+    },
+    {
+      "feature": "institution_region",
+      "delta_mae_usd": 987.23
+    },
+    {
+      "feature": "institution_tuition_out_state_usd",
+      "delta_mae_usd": 942.88
+    },
+    {
+      "feature": "institution_avg_sat",
+      "delta_mae_usd": 919.68
+    },
+    {
+      "feature": "institution_undergrad_enrollment",
+      "delta_mae_usd": 395.57
+    }
+  ],
+  "slice_threshold": 50,
+  "test_n": 5771,
+  "diagnostic_data_use": "Post-model-freeze heldout analysis only; no hyperparameter or feature changes.",
+  "caution": "Error heterogeneity is descriptive; correlated predictors and population suppression limit causal interpretation."
+}
