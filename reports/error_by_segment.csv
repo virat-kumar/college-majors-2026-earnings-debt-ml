@@ -1,0 +1,37 @@
+dimension,segment,n_programs,n_institutions,median_actual_earnings_usd,mean_absolute_error_usd,mean_signed_error_usd
+cip_family_title,"Business, Management, Marketing, and Related Support Services",890,280,70920.0,7568.47,1105.96
+cip_family_title,Health Professions and Related Programs,541,241,73165.0,8657.06,642.59
+cip_family_title,Social Sciences,509,168,60020.0,6241.24,317.81
+cip_family_title,Visual and Performing Arts,366,155,43301.0,6009.42,-406.18
+cip_family_title,Engineering,361,86,94365.0,5547.49,-142.09
+cip_family_title,Biological and Biomedical Sciences,289,181,60014.0,7031.55,816.32
+cip_family_title,Education,281,166,49540.0,4392.82,238.98
+cip_family_title,"Communication, Journalism, and Related Programs",259,152,56862.0,5903.52,479.39
+cip_family_title,Computer and Information Sciences and Support Services,256,166,88990.5,11696.36,1248.06
+cip_family_title,Psychology,242,225,51272.0,4611.53,131.67
+cip_family_title,English Language and Literature/Letters,162,135,50616.5,5951.26,296.11
+cip_family_title,"Homeland Security, Law Enforcement, Firefighting and Related Protective Services",162,141,56729.5,6187.43,1739.51
+cip_family_title,"Parks, Recreation, Leisure, Fitness, and Kinesiology",158,133,52974.5,5490.29,-182.45
+cip_family_title,Public Administration and Social Service Professions,148,124,52907.5,4256.61,-249.72
+cip_family_title,Multi/Interdisciplinary Studies,126,95,56758.5,8172.25,-2642.19
+cip_family_title,History,108,108,51322.5,6351.97,704.62
+cip_family_title,Physical Sciences,106,69,66908.5,7682.32,-1104.46
+cip_family_title,"Liberal Arts and Sciences, General Studies and Humanities",100,100,51874.5,6628.7,-859.44
+cip_family_title,Mathematics and Statistics,98,80,73583.5,12164.49,3268.58
+cip_family_title,Engineering/Engineering-Related Technologies/Technicians,92,48,84813.0,8491.79,1021.03
+cip_family_title,"Foreign Languages, Literatures, and Linguistics",86,71,55993.5,7265.77,1508.81
+cip_family_title,Family and Consumer Sciences/Human Sciences,78,52,50087.5,5496.55,-962.16
+cip_family_title,Agricultural/Animal/Plant/Veterinary Science and Related Fields,76,29,54075.0,7529.86,700.08
+cip_family_title,Natural Resources and Conservation,75,62,52570.0,5640.04,-1325.36
+institution_control,Public,3578,139,58625.0,6154.84,597.28
+institution_control,"Private, nonprofit",2035,210,63746.0,8255.83,4.06
+institution_control,"Private, for-profit",158,30,54321.0,8381.98,899.73
+institution_region,Mid East,1328,75,66154.0,7640.72,1120.23
+institution_region,Southeast,1120,83,55186.0,6325.16,-290.75
+institution_region,Great Lakes,872,50,58193.5,5509.57,201.19
+institution_region,Far West,717,37,62385.0,8224.0,711.04
+institution_region,Plains,468,37,57138.0,5991.48,348.54
+institution_region,Rocky Mountains,392,14,61841.0,7829.59,2428.94
+institution_region,New England,381,25,66258.0,8073.98,-890.84
+institution_region,Southwest,342,28,58550.5,6290.37,-1175.9
+institution_region,Outlying Areas,77,11,31848.0,5314.88,-575.2

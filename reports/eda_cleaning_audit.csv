@@ -1,0 +1,5 @@
+stage,n_records,audit_reason
+Raw observations,227980,Original Kaggle snapshot
+After dropping exact duplicates,227980,No exact duplicate raw rows per EDA
+After removing foreign institutions,223318,Restrict to U.S. scope
+After collapsing repeated shared-campus outcomes,212707,Only flag=1 rows removed; verified no conflicting group earnings

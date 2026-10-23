@@ -1,6 +1,9 @@
-# Ignore the original raw CSV (published as a release asset) and arbitrary generated CSVs.
-# Allow only the reviewed canonical reference split and attribution document.
+# Keep 126MB original CSV in its versioned GitHub Release (not normal Git).
+# Track reviewed model and EDA report CSVs, plus the canonical split.
+# Arbitrary local CSV files and secrets remain ignored.
 *.csv
+!reports/
+!reports/*.csv
 !data/
 data/*
 !data/split_ids.csv

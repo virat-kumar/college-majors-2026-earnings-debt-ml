@@ -1,0 +1,61 @@
+% Submission-ready typography for Group 2 report. Works with Pandoc/XeLaTeX.
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{placeins}
+\usepackage{xcolor}
+\definecolor{ReportBlue}{HTML}{1D5373}
+\definecolor{ReportGray}{HTML}{63717D}
+\titleformat{\section}{\Large\bfseries\color{ReportBlue}}{\thesection}{0.75em}{}
+\titleformat{\subsection}{\large\bfseries\color{ReportBlue}}{\thesubsection}{0.75em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{ReportBlue}}{\thesubsubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{15pt plus 3pt minus 2pt}{8pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\setlength{\parskip}{4.5pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.13}
+\captionsetup[figure]{font=small,labelfont=bf,labelsep=period,skip=6pt}
+\captionsetup[table]{font=small,labelfont=bf,labelsep=period,skip=6pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{ReportGray} BUAN 6341 / Group 2}
+\fancyhead[R]{\sffamily\footnotesize\color{ReportGray} College Majors 2026}
+\fancyfoot[C]{\sffamily\footnotesize\color{ReportGray}\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{18pt}
+\raggedbottom
+
+% Dedicated, formal university-project cover and separate contents page.
+\makeatletter
+\renewcommand{\maketitle}{%
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+\vspace*{0.75in}
+{\color{ReportBlue}\rule{0.88\textwidth}{1.25pt}}\par
+\vspace{0.9in}
+{\sffamily\large\bfseries THE UNIVERSITY OF TEXAS AT DALLAS}\par
+\vspace{0.13in}
+{\sffamily\normalsize BUAN 6341 | APPLIED MACHINE LEARNING}\par
+\vspace{0.95in}
+{\Huge\bfseries\color{ReportBlue}\@title}\par
+\vspace{0.74in}
+{\color{ReportBlue}\rule{0.88\textwidth}{0.9pt}}\par
+\vfill
+{\large\bfseries GROUP 2}\par
+\vspace{0.08in}
+{\normalsize Final Project Report}\par
+\vspace{0.2in}
+{\normalsize October 23, 2026}\par
+\vspace{0.46in}
+{\footnotesize\sffamily Data Audit \textbullet\ EDA \textbullet\ Four Models \textbullet\ Fine-Tuning \textbullet\ Explainability}\par
+\end{center}
+\end{titlepage}
+}
+\makeatother
+\let\originaltableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{\originaltableofcontents\clearpage}
