@@ -20,7 +20,7 @@ python setup.py
 
 1. Creates a project-local, isolated `.venv` using your Python interpreter (no system package installation).
 2. Installs packages from `requirements.txt`.
-3. Downloads the original dataset from its public Kaggle page, checks the expected schema and row count, and copies `college_majors_2026.csv` into the repository root **locally only**.
+3. Downloads the **versioned public CSV snapshot from GitHub Releases** (or Kaggle if GitHub is unavailable), verifies the exact SHA-256 and expected shape, then places `college_majors_2026.csv` in the repository root without tracking the downloaded copy.
 4. Smoke-tests installed dependencies and confirms the notebook can find the dataset.
 
 **Launch** after setup:
@@ -39,25 +39,28 @@ If your Linux distro only provides the `python3` command, run `python3 setup.py`
 college-majors-2026-earnings-debt-ml/
 ├── College_Majors_EDA_Colab.ipynb  # Original, unedited EDA notebook
 ├── README.md                       # This guide
-├── DATA.md                         # Dataset provenance, manual installation, version checks
+├── DATA.md                         # Dataset release links, provenance, integrity and licensing
 ├── CONTRIBUTING.md                 # Team Git + review guidelines
 ├── requirements.txt                # Python dependencies
 ├── setup.py                        # Cross-platform, one-command full setup
-├── download_data.py                # Download + validate dataset, never commit
+├── download_data.py                # Exact versioned GitHub Release download + Kaggle fallback
 ├── validate.py                     # Smoke tests; optional notebook run
 ├── launch.py                       # Cross-platform JupyterLab launcher
 ├── reports/
 │   └── EDA_SUMMARY.md              # Findings from group's 2-page summary
 ├── .github/workflows/ci.yml        # Linux / Windows setup validation
-├── .gitignore                      # Explicit dataset/output/secret safeguards
+├── .gitignore                      # Ignore raw downloads, caches and secrets
 │
 ├── .venv/                          # Created by setup, IGNORED
-├── college_majors_2026.csv         # Downloaded original CSV, IGNORED
-├── split_ids.csv                   # Created by original notebook, IGNORED
-└── data/source_manifest.json      # Local SHA256 + provenance, IGNORED
+├── college_majors_2026.csv         # Downloaded raw CSV, ignored by Git
+├── split_ids.csv                   # Notebook-generated file, ignored by Git
+└── data/
+    ├── split_ids.csv              # Committed reference grouped train/test split
+    ├── README.md                  # Public data provenance + CC BY-SA attribution
+    └── source_manifest.json       # Local metadata, ignored by Git
 ```
 
-**The raw CSV, downloaded files, row-level splits, Jupyter execution artifacts, caches, models, private tokens and environments are never committed.** Clone the code, then download the data with the setup script.
+**Both CSVs are published on GitHub:** the original 126.3 MB dataset is a [versioned GitHub Release asset](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/tag/data-v1.0.0), and the 8.9 MB [institution-group split](data/split_ids.csv) is also Git-tracked as a reviewed reference. Other generated outputs, credentials and virtual environments remain ignored.
 
 ## Research questions
 
@@ -81,9 +84,11 @@ For full EDA findings, see [reports/EDA_SUMMARY.md](reports/EDA_SUMMARY.md).
 
 ## Dataset: download, location and license
 
-**Original source:** [College Majors 2026: Earnings, Debt, Jobs, AI — Kaggle](https://www.kaggle.com/datasets/kylefengkfeng209/college-majors-2026-earnings-debt-jobs-ai)
+**Original source and attribution:** [College Majors 2026: Earnings, Debt, Jobs, AI — Kaggle](https://www.kaggle.com/datasets/kylefengkfeng209/college-majors-2026-earnings-debt-jobs-ai)
 
-**Data license:** The Kaggle listing identifies **CC BY-SA 4.0**. Please follow the source attribution/license requirements. This repository deliberately **does not redistribute the dataset**.
+**Data license:** The Kaggle listing identifies **CC BY-SA 4.0**. The public dataset and derived split are redistributed under these terms with [publisher attribution](data/README.md). The team's original code and notebook are not automatically covered by the data license.
+
+**Get the actual CSV files:** [Raw college_majors_2026.csv (GitHub Release)](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/college_majors_2026.csv) · [Grouped split_ids.csv (tracked reference)](data/split_ids.csv) · [Both files in Data Release v1.0.0](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/tag/data-v1.0.0).
 
 ```text
 # Desired local layout:
@@ -92,7 +97,7 @@ college-majors-2026-earnings-debt-ml/
 └── college_majors_2026.csv       # Local, ignored
 ```
 
-`python setup.py` does this automatically. If the Kaggle API is unavailable, download the dataset ZIP through the linked Kaggle page, extract **`college_majors_2026.csv`** and place the CSV in the project root, **next to the notebook**. Re-run `python setup.py` to validate it. See [DATA.md](DATA.md) for troubleshooting, SHA256 manifest, and data version controls.
+`python setup.py` fetches the exact versioned GitHub Release asset, verifies its SHA-256 and size, and falls back to Kaggle if needed. For manual setup, download the [original CSV asset](https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/college_majors_2026.csv), put it next to the notebook and rerun setup. The canonical derived split lives in [data/split_ids.csv](data/split_ids.csv). See [DATA.md](DATA.md) for reproducibility and license details.
 
 ## Common commands
 
@@ -105,7 +110,7 @@ college-majors-2026-earnings-debt-ml/
 | Re-fetch/check dataset (after setup) | `python setup.py --skip-install` |
 | Execute the notebook in a copy (after setup) | `python .venv/Scripts/python.exe validate.py --execute` (Windows) or `./.venv/bin/python validate.py --execute` (Linux) |
 
-The optional `--execute` command does **not** overwrite the checked-in notebook; it writes a run-result copy into ignored `.artifacts/` instead. This notebook creates `split_ids.csv` at runtime; that file also remains private and is ignored.
+The optional `--execute` command does **not** overwrite the checked-in notebook; it writes a run-result copy into ignored `.artifacts/` instead. The notebook writes its own ignored root-level `split_ids.csv`; the published, immutable reference is [data/split_ids.csv](data/split_ids.csv).
 
 ## Collaboration
 
@@ -114,7 +119,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
 - Create a feature branch named `feature/<your-task>` and send a pull request to `main`.
 - Reuse the same **unmodified, audited dataset and institution-level split** for a fair apples-to-apples model comparison.
 - Record training population, chosen features, preprocessing, validation folds, baseline and random seed in each PR.
-- Do not upload raw data, generated output files, Kaggle tokens, Colab credentials, or environment folders.
+- The two reviewed CSV snapshots have been explicitly published (large raw data in the versioned Release, reviewed split in data/). Do not commit *additional* datasets, notebook artifacts, secrets, Kaggle tokens, Colab credentials or environment folders without review.
 - Coordinate decisions on **bachelor's vs. all credentials**, **the debt-risk task/threshold**, **final feature list** and **raw vs. log earnings** before merging modeling results.
 
 **Academic integrity:** Attribute work and data sources; use this shared repository for collaboration and reproducible analysis, and follow applicable course rules.

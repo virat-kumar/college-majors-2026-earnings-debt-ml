@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Check exact original notebook and no committed datasets
+      - name: Verify unchanged original notebook and only reviewed public CSV
         shell: python
         run: |
           import hashlib, pathlib, subprocess
@@ -31,8 +31,19 @@ jobs:
           actual = hashlib.sha256(notebook.read_bytes()).hexdigest()
           assert actual == expected, f"Notebook modified: {actual}"
           tracked = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
-          forbidden = [p for p in tracked if p.lower().endswith((".csv", ".tsv", ".parquet", ".zip", ".pkl", ".joblib", ".key", ".pem")) or p.startswith(("data/", ".venv/", ".env"))]
+          allowed_csv = {"data/split_ids.csv"}
+          allowed_data = {"data/split_ids.csv", "data/README.md"}
+          forbidden = [
+              p for p in tracked
+              if (p.lower().endswith((".csv", ".tsv", ".parquet", ".zip", ".pkl", ".joblib", ".key", ".pem")) and p not in allowed_csv)
+              or (p.startswith("data/") and p not in allowed_data)
+              or p.startswith((".venv/", ".env"))
+          ]
           assert not forbidden, f"Disallowed tracked files: {forbidden}"
-          print("Notebook hash and data/secret guard: PASS")
+          assert "data/split_ids.csv" in tracked, "Missing published reference split"
+          reference = pathlib.Path("data/split_ids.csv")
+          split_hash = hashlib.sha256(reference.read_bytes()).hexdigest()
+          assert split_hash == "e5215d887840ae25e0c953793842b1886670f51b879783904988a1348f7bfe6c", f"Split snapshot modified: {split_hash}"
+          print("Notebook bytes, approved CSV reference and secret guard: PASS")
       - name: Install dependencies and run smoke tests (offline dataset mode)
         run: python setup.py --skip-data
