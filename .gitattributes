@@ -2,4 +2,4 @@
 *.md text eol=lf
 *.py text eol=lf
 *.yml text eol=lf
-*.csv -diff
+*.csv -text -diff
