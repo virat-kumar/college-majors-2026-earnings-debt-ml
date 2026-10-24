@@ -4,13 +4,14 @@
 
 We completed a reproducible applied machine-learning study of **program-level median earnings four years after bachelor's degree completion**. Our project proceeds from the original team's EDA through an independent dataset audit, four different regression model families, cross-validation selection, hyperparameter tuning, explainability and an actionable but cautious business case.
 
-**Status: COMPLETE. The final report, code, figures, reviewed CSV results and PDF are published.** The original EDA notebook remains byte-for-byte unchanged. The source dataset is public in GitHub Releases. No GitHub Actions workflows are configured.
+**Status: COMPLETE. The final team-ready PDF, editable Word report, source, model selection, diagrams, evidence and code are published.** The original EDA notebook remains byte-for-byte unchanged. The source dataset is public in GitHub Releases. No GitHub Actions workflows are configured.
 
 ## Final submission: open this first
 
 | File | What it contains |
 |:---|:---|
-| **[Final Group 2 project report (PDF)](submission/Group_2_Final_Project_Report.pdf)** | **23-page, submission-ready report** with professional cover, table of contents, 15 real charts, all methodology and metrics, explainability, business case and references |
+| **[Final Group 2 project report (PDF)](submission/Group_2_Final_Project_Report.pdf)** | **26-page team-ready submission** with cover, table of contents, 16 real diagrams/charts, all four models, validation, tuning, test metrics, explainability, business case and references |
+| **[Editable final report (Word DOCX)](submission/Group_2_Final_Project_Report.docx)** | **21-page editable companion** with formatted tables, numbered figures, full content, separate cover/contents and group handoff |
 | [Final report Markdown source](submission/Group_2_Final_Project_Report.md) | Editable source corresponding to the PDF; regenerates it via Pandoc |
 | [Detailed model explanation](reports/MODEL_EXPLANATION.md) | Methodology, before/after metrics, uncertainty, interpretability and error slices |
 | [Business case](reports/BUSINESS_CASE.md) | Stakeholder design, pilot phases, KPIs, safety and economic limitations |
@@ -26,7 +27,7 @@ We completed a reproducible applied machine-learning study of **program-level me
 | **5 - Model tuning** | Which settings improve the selected family without viewing final test outcomes? | [Hyperparameter tuning code](modeling/model_fine_tuning.py); [12 candidates CSV](reports/tuning_candidates.csv); [frozen holdout evaluation JSON](reports/model_evaluation.json); [heldout predictions CSV](reports/heldout_predictions.csv) |
 | **6 - Model explainability** | What inputs matter and where does the model err? | [Post-fit diagnostic code](modeling/model_explainability.py); [detailed explanation](reports/MODEL_EXPLANATION.md); [feature importance CSV](reports/feature_importance.csv); [error by segment CSV](reports/error_by_segment.csv); [diagnostic figures](reports/figures/) |
 | **7 - Business case** | How could this be used responsibly in student advising or academic program research? | [Business case report](reports/BUSINESS_CASE.md); [full report](submission/Group_2_Final_Project_Report.pdf) |
-| **8 - PDF deliverable** | How do all parts connect into one professional submission? | [Final PDF](submission/Group_2_Final_Project_Report.pdf), [Markdown](submission/Group_2_Final_Project_Report.md), [PDF generator](submission/render_report.py) |
+| **8 - Team submission: PDF + Word** | How do all phases connect into one professional deliverable? | [Final PDF](submission/Group_2_Final_Project_Report.pdf), [editable DOCX](submission/Group_2_Final_Project_Report.docx), [Markdown](submission/Group_2_Final_Project_Report.md), [workflow diagram](reports/figures/study_workflow.png) |
 
 ## Model comparison: actual experimental results
 
@@ -110,7 +111,8 @@ college-majors-2026-earnings-debt-ml/
 ├── submission/
 │   ├── Group_2_Final_Project_Report.md
 │   ├── Group_2_Final_Project_Report.pdf
-│   ├── README.md, render_report.py, report_style.tex
+│   ├── Group_2_Final_Project_Report.docx
+│   ├── README.md, render_report.py, render_word.py, make_workflow_diagram.py, report_style.tex
 ├── tests/
 └── .venv/, .artifacts/, downloaded raw CSV  # local-only, ignored
 ```
