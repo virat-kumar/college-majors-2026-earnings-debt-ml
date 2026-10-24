@@ -98,8 +98,8 @@ def main():
             pdf.read_bytes()[:5]==b"%PDF-", "Final Markdown and true non-empty searchable PDF exist")
     source=md.read_text(encoding="utf-8")
     image_links=re.findall(r"!\[[^\]]*\]\(([^)]+)\)",source)
-    require(len(image_links)==15 and all((submission/path).is_file() for path in image_links),
-            "Final report cites fifteen existing EDA/model plots")
+    require(len(image_links)==16 and all((submission/path).is_file() for path in image_links),
+            "Final report cites sixteen existing EDA/model/workflow plots")
     require(all(key in source for key in
                 ["19,512","5,771","6,956.68","6,993.01","6,855.28","56.89%","10,611",
                  "Business case","permutation importance","Ridge","Random Forest"]),
@@ -110,7 +110,7 @@ def main():
         match=re.search(r"^Pages:\s+(\d+)\s*$",info,re.M)
         require(match is not None and int(match.group(1))>=20, "PDF physically multi-page and readable")
         fig_nums=set(int(i) for i in re.findall(r"Figure\s+(\d+)\.",text))
-        require(fig_nums==set(range(1,16)),"All fifteen numbered figures appear in PDF text")
+        require(fig_nums==set(range(1,17)),"All sixteen numbered figures appear in PDF text")
         require("Executive summary" in text and "Conclusion" in text and "Business case" in text,
                 "PDF extraction includes complete front matter, business section and ending")
     require((ROOT/"README.md").read_text().count("submission/Group_2_Final_Project_Report.pdf")>=1,

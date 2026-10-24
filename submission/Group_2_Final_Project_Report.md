@@ -31,7 +31,7 @@ Following duplicate, foreign-institution and shared-campus checks, we retained *
 
 Our interpretability checks found that **field of study, projected occupational growth, AI-software occupation share, and occupation wage** were strong predictive inputs. These are not proven causal levers. Errors were larger for unusually high-earning programs, and missing outcome reporting may exclude small or atypical programs. We therefore recommend a **human-supervised college-program comparison prototype** with transparent limitations rather than an automated ranking of students or colleges.
 
-**Deliverables.** We provide the original EDA notebook, two separate executable modeling phases, a post-fit interpretability analysis, machine-readable metrics and CSV evidence, a business case, the editable Markdown source of this report, and this PDF. The project can be reproduced using the instructions at the end.
+**Deliverables.** We provide the original EDA notebook, two separate executable modeling phases, a post-fit interpretability analysis, machine-readable metrics and CSV evidence, a business case, an editable Word document, the Markdown source of this report, and this PDF. The project can be reproduced using the instructions at the end.
 
 # Project objective and business motivation
 
@@ -162,6 +162,11 @@ If multiple majors from one school appeared in both training and test, their sha
 | Total observed bachelor's | **25,283** | 1,799 | Reported-label research population |
 
 We verified **zero overlapping schools** between train and test. Within development data, the frozen `cv_fold` values 0-4 also assign every school to only one validation fold; there are **no within-school cross-fold leaks**. We kept the original row-level split ID file without re-randomizing. The original EDA's baseline of about USD 15,799 used a fresh `GroupKFold` on its bachelor's subset; our canonical preassigned full-base folds yield **USD 15,806** for the same mean-only method. This minor difference reflects fold assignment, **not** a contradictory outcome.
+
+
+![Audited model-development workflow: the frozen school-group split separates training-only validation and tuning from the previously unseen final test institutions.](../reports/figures/study_workflow.png){width=95%}
+
+The workflow makes the evaluation boundary explicit: **four algorithms and all 12 boosting settings were selected only within the development branch**. The locked test institutions entered only after the best configuration had been fitted. Post-fit error and permutation analyses explain the result; they were not used to change the chosen model.
 
 # Comparing four different model families
 
@@ -401,3 +406,18 @@ We use random seed **42**, record our exact holdout IDs and CV folds in `data/sp
 We completed the full workflow from **dataset audit and EDA through four model families, careful selection, hyperparameter tuning, holdout evaluation, interpretability and a responsible business case**. Our strongest model is histogram gradient boosting on the reported bachelor's-program target, with **USD 6,957 held-out MAE**, substantially below the mean-only baseline. It is equally important to report that the **USD 36 tuning improvement over untuned boosting is not reliably distinguishable from zero** on this school-separated test. The original notebook remains unchanged, and every headline number and illustration is supported by a recorded source or executed experiment.
 
 We conclude that public institution and occupation information supports a useful **research-level program earnings benchmark** for appropriately covered bachelor's programs. The next responsible step is an independently validated, advisor-supervised prototype that explains its errors and missingness; it is **not** a promise of individual salary, causal educational benefit or verified financial return.
+
+\clearpage
+
+## Team handoff: next validation priorities
+
+The following are **recommendations for future work, not completed experiments or proof of business impact**. Our team proposes prioritizing them before any release of individual program predictions.
+
+| Proposed next activity | Evidence that makes it necessary | What would count as acceptable progress |
+|:---|:---|:---|
+| **External time-based validation** | Our current test separates schools within one published snapshot, not future labor-market cohorts. | Repeat evaluation on newly released, time-aligned program outcomes without retuning on the original holdout. |
+| **Coverage and subgroup audit** | Fewer than one-quarter of cleaned programs report the four-year target; predictive error varies by major and earnings level. | Publish coverage by program group, sample sizes, MAE and high-error rates; define an abstention policy before any external pilot. |
+| **Advisor-led interpretation pilot** | The model reduces prediction error but has not been shown to improve student choices or financial outcomes. | Test whether advisors and students understand the difference between observed program earnings, estimated medians and individual salaries. |
+| **Separate debt-risk study, if approved** | The exploratory 8% debt-risk label is not a validated classifier and combines earnings and loan-payment information. | Agree on a population, target definition and leakage-safe feature set, then run an independent grouped classification experiment. |
+
+Our submission therefore establishes a **reproducible research benchmark and documented evaluation boundary**, not a production system or validated causal policy intervention. The primary handoff decision is to retain the tuned boosting model as a research candidate, keep its uncertainty visible, and seek new evidence before using predictions for consequential advice.

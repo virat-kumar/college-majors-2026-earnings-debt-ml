@@ -1,3 +1,16 @@
+# Original EDA-only handout - not the final project submission
+
+**This page is an archived summary of the early exploratory analysis. It is not our Group 2 final project report.** It predates the completed modeling experiments and contains historical proposed decisions.
+
+For a team-ready submission with the real **four-model selection, institution-grouped evaluation, hyperparameter tuning, error analysis, 16 figures including the modeling workflow diagram, and the business case**, use:
+
+- **[Final report PDF](../submission/Group_2_Final_Project_Report.pdf)** for reviewing/submitting.
+- **[Editable final report DOCX](../submission/Group_2_Final_Project_Report.docx)** for team editing.
+- [Full Markdown report source](../submission/Group_2_Final_Project_Report.md) for technical review and reproducible rendering.
+- [Model comparison evidence](model_comparison.csv) and [final test evaluation](model_evaluation.json).
+
+---
+
 # Exploratory Data Analysis — Group 2
 
 *Source: the provided “EDA Summary: College Majors 2026 (Earnings, Debt, Jobs, AI)”, two-page group summary by Manoj Elangovan Jayanthi. The original notebook contains the associated figures, tables and analytical code. This Markdown guide summarizes the supplied report rather than replacing the authored notebook.*

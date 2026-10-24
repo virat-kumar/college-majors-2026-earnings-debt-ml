@@ -33,7 +33,14 @@ class PublishedArtifactTests(unittest.TestCase):
         self.assertTrue(q.is_file() and q.stat().st_size>200_000)
         self.assertEqual(q.read_bytes()[:5],b"%PDF-")
         images=re.findall(r"!\[[^\]]*\]\(([^)]+)\)",p.read_text())
-        self.assertEqual(len(images),15)
+        self.assertEqual(len(images),16)
+        import zipfile
+        docx=p.with_suffix(".docx")
+        self.assertTrue(docx.is_file() and docx.stat().st_size>100_000)
+        with zipfile.ZipFile(docx) as package:
+            media=[n for n in package.namelist() if n.startswith("word/media/") and n.lower().endswith((".png", ".jpg", ".jpeg"))]
+            self.assertEqual(len(media),16)
+            self.assertIn("word/document.xml",package.namelist())
         for image in images:
             with self.subTest(image=image):
                 self.assertTrue((p.parent/image).is_file())
