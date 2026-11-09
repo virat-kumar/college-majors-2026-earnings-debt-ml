@@ -1,0 +1,10 @@
+{
+  "source": "https://www.kaggle.com/datasets/kylefengkfeng209/college-majors-2026-earnings-debt-jobs-ai",
+  "license": "CC BY-SA 4.0 (as listed by Kaggle)",
+  "distribution": "https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/download/data-v1.0.0/college_majors_2026.csv",
+  "retrieved_via": "existing locally verified copy",
+  "csv_file": "college_majors_2026.csv",
+  "rows": 227980,
+  "columns": 72,
+  "sha256": "58f1c10e79793f33049f3b381cd81d4d0c190ca1052e427c29779d0c89c5ceca"
+}
