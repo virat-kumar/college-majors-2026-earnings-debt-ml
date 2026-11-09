@@ -1,0 +1,7 @@
+step,rows_removed,rows_left
+Start: all programs,0,227980
+Keep bachelor's degrees only,156316,71664
+Keep programs with 4-yr earnings reported,44047,27617
+Drop foreign institutions,4,27613
+Drop branch-campus copies of shared earnings,2330,25283
+Drop rows missing national benchmark,0,25283

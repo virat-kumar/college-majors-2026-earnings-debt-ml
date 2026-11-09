@@ -1,0 +1,13 @@
+# Tested with Python 3.12; model artifacts were saved using scikit-learn 1.9.1.
+# Pin model serialization dependencies to preserve joblib compatibility.
+numpy>=2.0,<3
+pandas>=2.2,<3
+scikit-learn==1.9.1
+joblib==1.6.0
+matplotlib>=3.9,<4
+seaborn>=0.13,<1
+jupyterlab>=4,<5
+ipykernel>=6,<7
+tqdm>=4.66,<5
+tqdm-joblib>=0.0.5,<1
+kagglehub>=0.3,<1

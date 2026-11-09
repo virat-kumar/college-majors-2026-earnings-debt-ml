@@ -1,0 +1,142 @@
+# Project inventory for programmatic discovery. See README.md for the narrative guide.
+schema_version = 1
+last_reviewed = "2026-11-09"
+
+[project]
+name = "Predicting College Program Return on Investment"
+course = "BUAN 6341 Applied Machine Learning"
+term = "Fall 2026"
+group = "Group 2"
+repository = "https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml"
+task = "Regression of median annual earnings four years after bachelor's completion"
+unit_of_observation = "institution x field of study x bachelor's credential"
+interpretation_scope = "Program-level historical median, not an individual's salary or causal/net ROI"
+readme = "README.md"
+
+[paths]
+submission = "0. Submission/"
+source_manifest = "1. Data/source_manifest.json"
+source_readme = "1. Data/README.md"
+split_reference = "1. Data/split_ids.csv"
+eda_notebook = "2. EDA/College_Majors_Bachelors_Data_Prep_EDA.ipynb"
+cleaning_log = "2. EDA/bachelors_cleaning_log.csv"
+model_ready_csv = "2. EDA/bachelors_model_ready.csv"
+eda_figures = "2. EDA/figures/"
+ridge_notebook = "3. Modelling/College_Majors_Model1_Ridge.ipynb"
+random_forest_notebook = "3. Modelling/College_Majors_Model2_RandomForest.ipynb"
+gradient_boosting_notebook = "3. Modelling/College_Majors_Model3_GradientBoosting.ipynb"
+model_figures = "3. Modelling/figures/"
+saved_models = "3. Modelling/saved_models/"
+inference_notebook = "4. Inference/College_Program_Inference_Two_Stories.ipynb"
+tests = "tests/test_inference_smoke.py"
+requirements = "requirements.txt"
+
+[dataset]
+name = "College Majors 2026: Earnings, Debt, Jobs, AI"
+publisher = "kylefengkfeng209"
+source_url = "https://www.kaggle.com/datasets/kylefengkfeng209/college-majors-2026-earnings-debt-jobs-ai"
+source_file = "college_majors_2026.csv"
+raw_release = "https://github.com/virat-kumar/college-majors-2026-earnings-debt-ml/releases/tag/data-v1.0.0"
+source_sha256 = "58f1c10e79793f33049f3b381cd81d4d0c190ca1052e427c29779d0c89c5ceca"
+license = "CC BY-SA 4.0 (as reported on Kaggle)"
+raw_rows = 227980
+raw_columns = 72
+cleaned_bachelor_programs = 25283
+sample_institutions = 1799
+target_column = "target_log_earnings_4yr"
+outcome_column = "median_earnings_4yr_usd"
+
+[features]
+source_columns = 31
+numeric_columns = 25
+categorical_columns = 6
+encoded_columns_reported = 88
+categorical_unknown_handling = "ignore"
+numeric_missing_handling = "median imputation within fitted preprocessing pipeline"
+excluded_outcomes = ["median_earnings_4yr_usd", "target_log_earnings_4yr", "target_above_national"]
+model_input_description = "Program, institution, location, national field benchmark, linked labor market and AI exposure"
+
+[split]
+method = "grouped by institution / opeid6"
+cross_validation = "5-fold GroupKFold by institution"
+training_programs = 19932
+training_institutions = 1439
+test_programs = 5351
+test_institutions = 360
+group_disjoint = true
+canonical_split_sha256 = "e5215d887840ae25e0c953793842b1886670f51b879783904988a1348f7bfe6c"
+
+[models.baseline]
+label = "National field median"
+test_r2_log = 0.566
+test_mae_usd = 8760
+test_rmse_usd = 12624
+test_median_abs_pct_error = 10.4
+
+[models.ridge]
+label = "Ridge Regression"
+file = "3. Modelling/saved_models/ridge_pipeline.joblib"
+cv_r2_log = 0.753
+test_r2_log = 0.744
+test_mae_usd = 7030
+test_rmse_usd = 10005
+test_median_abs_pct_error = 8.6
+
+[models.random_forest]
+label = "Random Forest"
+file = "3. Modelling/saved_models/random_forest_pipeline.joblib"
+role = "best model / primary stakeholder forecast"
+cv_r2_log = 0.789
+test_r2_log = 0.786
+test_mae_usd = 6232
+test_rmse_usd = 8914
+test_median_abs_pct_error = 7.6
+
+[models.gradient_boosting]
+label = "Histogram Gradient Boosting"
+file = "3. Modelling/saved_models/gradient_boosting_pipeline.joblib"
+role = "secondary model, cross-checking inference"
+cv_r2_log = 0.788
+test_r2_log = 0.783
+test_mae_usd = 6314
+test_rmse_usd = 8957
+test_median_abs_pct_error = 7.7
+
+[[inference.scenarios]]
+id = "computer_science_realistic_plan"
+program_id = "172699-11.07-3"
+institution = "Western Michigan University"
+field = "Computer Science"
+question = "Should the student plan using the national CS median?"
+national_reference_usd = 107009
+random_forest_prediction_usd_rounded = 91424
+observed_median_usd = 90876
+random_forest_abs_pct_error_rounded = 0.6
+message = "A national major average can overstate a specific campus's program-level outlook."
+
+[[inference.scenarios]]
+id = "nursing_program_shortlist"
+program_id = "110556-51.38-3"
+institution = "California State University-Fresno"
+field = "Registered Nursing"
+question = "Should the family shortlist the program given a $100,000 earnings planning goal?"
+national_reference_usd = 88910
+random_forest_prediction_usd_rounded = 113046
+observed_median_usd = 111278
+random_forest_abs_pct_error_rounded = 1.6
+message = "A national field average can understate the outlook of a specific program."
+
+[workflow]
+order = ["1. Data/", "2. EDA/", "3. Modelling/", "4. Inference/"]
+setup_command = "python -m pip install -r requirements.txt"
+automated_tests_command = "python -m unittest discover -s tests -v"
+inference_retrains = false
+notebook_stored_outputs = true
+python_tested = "3.12"
+notes = "Raw source CSV is hosted in a versioned GitHub Release; saved joblib pipelines load only from trusted sources."
+
+[tests]
+automated_file = "tests/test_inference_smoke.py"
+notebook_checks = "Saved-model roundtrip assertions in all three model notebooks and completed outputs in inference notebook"
+full_retraining_in_ci = false
+test_conditions = ["Input feature schema", "School-disjoint split", "No target leakage", "All saved models load and predict", "Two held-out business stories"]

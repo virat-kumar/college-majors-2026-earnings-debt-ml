@@ -1,13 +1,9 @@
-# Keep 126MB original CSV in its versioned GitHub Release (not normal Git).
-# Track reviewed model and EDA report CSVs, plus the canonical split.
-# Arbitrary local CSV files and secrets remain ignored.
+# Public original 126 MB CSV is distributed via versioned GitHub Release, not Git.
+# Commit only reviewed, reproducible intermediate CSV outputs.
 *.csv
-!reports/
-!reports/*.csv
-!data/
-data/*
-!data/split_ids.csv
-!data/README.md
+!1. Data/split_ids.csv
+!2. EDA/bachelors_model_ready.csv
+!2. EDA/bachelors_cleaning_log.csv
 *.tsv
 *.parquet
 *.feather
@@ -17,11 +13,12 @@ data/*
 *.7z
 *.pkl
 *.pickle
+
+# Explicitly version the three trusted trained model pipelines for direct inference.
 *.joblib
-datasets/
-.cache/
-.kaggle/
-# Python / notebooks
+!3. Modelling/saved_models/*.joblib
+
+# Python / notebook build products
 .venv/
 venv/
 __pycache__/
@@ -34,13 +31,15 @@ __pycache__/
 .output/
 coverage/
 .coverage
-# Local settings and credentials
+
+# Secrets, credentials, local configuration
 .env
 .env.*
 !.env.example
 kaggle.json
 *.pem
 *.key
+
 # Editors / OS
 .DS_Store
 Thumbs.db
